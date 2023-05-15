@@ -7,8 +7,10 @@
 | nickname           | string  | null: false               |
 | email              | string  | null: false, unique: true |
 | encrypted_password | string  | null: false               |
-| name               | string  | null: false               |
-| kana_name          | string  | null: false               |
+| last_name          | string  | null: false               |
+| first_name         | string  | null: false               |
+| kana_last_name     | string  | null: false               |
+| kana_first_name    | string  | null: false               |
 | birthday           | date    | null: false               |
 
 
@@ -20,17 +22,17 @@
 
 ## items テーブル
 
-| Column       | Type       | Options                        |
-| ------------ | ---------- | ------------------------------ |
-| name         | string     | null: false                    |
-| introduce    | text       | null: false,                   |
-| category_id  | integer    | null: false,                   |
-| statement_id | integer    | null: false,                   |
-| load_id      | integer    | null: false,                   |
-| region_id    | integer    | null: false,                   |
-| send_day_id  | integer    | null: false,                   |
-| price        | integer    | null: false,                   |
-| user         | references | null: false, foreign_key: true |
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| name          | string     | null: false                    |
+| introduce     | text       | null: false,                   |
+| category_id   | integer    | null: false,                   |
+| statement_id  | integer    | null: false,                   |
+| load_id       | integer    | null: false,                   |
+| prefecture_id | integer    | null: false,                   |
+| send_day_id   | integer    | null: false,                   |
+| price         | integer    | null: false,                   |
+| user          | references | null: false, foreign_key: true |
 
 ### Association
 
