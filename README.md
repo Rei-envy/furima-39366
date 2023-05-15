@@ -8,7 +8,8 @@
 | email              | string  | null: false, unique: true |
 | encrypted_password | string  | null: false               |
 | name               | string  | null: false               |
-| birthday           | integer | null: false               |
+| kana_name          | string  | null: false               |
+| birthday           | date    | null: false               |
 
 
 ### Association
@@ -19,18 +20,24 @@
 
 ## items テーブル
 
-| Column    | Type       | Options                        |
-| --------- | ---------- | ------------------------------ |
-| name      | string     | null: false                    |
-| introduce | text       | null: false,                   |
-| delivery  | string     | null: false,                   |
-| price     | integer    | null: false,                   |
-| user      | references | null: false, foreign_key: true |
+| Column       | Type       | Options                        |
+| ------------ | ---------- | ------------------------------ |
+| name         | string     | null: false                    |
+| introduce    | text       | null: false,                   |
+| category_id  | integer    | null: false,                   |
+| statement_id | integer    | null: false,                   |
+| load_id      | integer    | null: false,                   |
+| region_id    | integer    | null: false,                   |
+| send_day_id  | integer    | null: false,                   |
+| price        | integer    | null: false,                   |
+| user         | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to : user
 - has_one : purchase
+
+<!-- - belongs_to :モデル名  ActiveHash用 -->
 
 
 
@@ -40,7 +47,6 @@
 | ------- | ---------- | ------------------------------ |
 | user    | references | null: false, foreign_key: true |
 | item    | references | null: false, foreign_key: true |
-| address | references | null: false, foreign_key: true |
 
 
 ### Association
@@ -54,15 +60,19 @@
 
 ## addresses テーブル
 
-| Column        | Type    | Options      |
-| ------------  | ------- | ------------ |
-| post_code     | integer | null: false  |
-| state         | string  | null: false  |
-| locality      | string  | null: false  |
-| house_number  | string  | null: false  |
-| building      | string  | null: false  |
-| phone         | integer | null: false  |
+| Column        | Type       | Options                        |
+| ------------  | ---------- | ------------------------------ |
+| post_code     | string     | null: false                    |
+| prefecture_id | integer    | null: false                    |
+| locality      | string     | null: false                    |
+| house_number  | string     | null: false                    |
+| building      | string     |                                |
+| phone         | string     | null: false                    |
+| purchase      | references | null: false, foreign_key: true |
+
 
 ### Association
 
 - belongs_to : purchase
+
+<!-- - belongs_to : モデル名 ActiveHash用 -->
