@@ -9,6 +9,7 @@ class Item < ApplicationRecord
     belongs_to :statement
 
     #空の投稿を保存できないようにする
+    validates :image,        presence: true
     validates :name,         presence: true
     validates :introduce,    presence: true
 
