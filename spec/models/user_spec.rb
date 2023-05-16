@@ -71,10 +71,48 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
       it 'passwordが5文字以下では登録できない' do
-        @user.password = '00000'
-        @user.password_confirmation = '00000'
+        @user.password = 'a0000'
+        @user.password_confirmation = 'a0000'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
+      end
+      it 'passwordが英字のみでは登録できない' do
+        @user.password = 'aaaaaa'
+        @user.password_confirmation = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+      it 'passwordが数字のみでは登録できない' do
+        @user.password = '000000'
+        @user.password_confirmation = '000000'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+      it 'passwordが全角では登録できない' do
+        @user.password = 'ああああああ'
+        @user.password_confirmation = 'ああああああ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+      it 'last_nameが半角文字が含まれている場合は登録できない' do
+        @user.last_name = 'aa山田'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Last name is invalid')
+      end
+      it 'first_nameが半角文字が含まれている場合は登録できない' do
+        @user.first_name = 'aa健'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('First name is invalid')
+      end
+      it 'kana_last_nameがカタカナ以外の文字（ひらがなや漢字）が含まれている場合は登録できない' do
+        @user.kana_last_name = 'やまだ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Kana last name is invalid')
+      end
+      it 'kana_first_nameがカタカナ以外の文字（ひらがなや漢字）が含まれている場合は登録できない' do
+        @user.kana_first_name = 'たける'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Kana first name is invalid')
       end
     end
   end
