@@ -9,10 +9,10 @@ class Item < ApplicationRecord
     belongs_to :statement
 
     #空の投稿を保存できないようにする
-    validates :name, :text, presence: true
-    validates :introduce, :text, presence: true
+    validates :name,         presence: true
+    validates :introduce,    presence: true
 
-    #半角数字のみを許可し、300~9999999までの範囲
+    #半角数字のみを許可し、300~9999999までの範囲を許可
     with_options presence: true, format: { with: /\A[0-9]+\z/i } do
         validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300,less_than_or_equal_to: 9_999_999}
     end
