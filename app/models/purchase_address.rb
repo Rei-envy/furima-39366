@@ -18,6 +18,9 @@ class PurchaseAddress
     validates :prefecture_id, numericality: { other_than: 1 }
 
     def save
-        # 各テーブルにデータを保存する処理を書く
+        # 購入情報を保存し、変数purchaseに代入する
+        purchase = Purchase.create(user_id: user_id, item_id: item_id)
+        # 住所を保存する
+        Address.create(post_code: post_code, presence_id: prefecture_id, locality: locality, house_number: house_number, building: building, phone: phone, purchase_id: purchase.id)
     end
 end
