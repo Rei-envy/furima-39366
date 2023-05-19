@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  before_action :authenticate_user! 
+  before_action :authenticate_user!
   before_action :move_to_root, only: [:index, :create]
 
   def index
@@ -18,6 +18,7 @@ class PurchasesController < ApplicationController
   end
 
   private
+
   def purchase_address_params
     params.require(:purchase_address).permit(:post_code, :prefecture_id, :locality, :house_number, :building, :phone).merge(
       user_id: current_user.id, item_id: params[:item_id], purchase_id: @purchase.id, token: params[:token]
@@ -37,9 +38,8 @@ class PurchasesController < ApplicationController
   # ログインしているユーザーと出品者が同じであるときも、トップページに遷移
   def move_to_root
     @item = Item.find(params[:item_id])
-    if current_user.id == @item.user_id || @item.purchase.present?
-        redirect_to root_path
+    return unless current_user.id == @item.user_id || @item.purchase.present?
 
-    end
+    redirect_to root_path
   end
 end

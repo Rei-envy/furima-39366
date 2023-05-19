@@ -4,7 +4,7 @@ RSpec.describe PurchaseAddress, type: :model do
   before do
     @user = FactoryBot.create(:user)
     @item = FactoryBot.create(:item)
-    @purchase_address = FactoryBot.build(:purchase_address,user_id: @user.id, item_id: @item.id)
+    @purchase_address = FactoryBot.build(:purchase_address, user_id: @user.id, item_id: @item.id)
   end
 
   describe '商品購入の保存' do
