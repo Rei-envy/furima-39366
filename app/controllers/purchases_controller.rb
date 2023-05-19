@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+  before_action :move_to_root, only: [:index, :create]
 
   def index
     @purchase_address = PurchaseAddress.new
@@ -37,5 +38,14 @@ class PurchasesController < ApplicationController
       card: purchase_address_params[:token], # カードトークン
       currency: 'jpy' # 通貨の種類（日本円）
     )
+  end
+
+  #出品していない売却済みの商品の商品購入ページに遷移しようとすると、トップページに遷移する
+  #ログインしているユーザーと出品者が同じであるときも、トップページに遷移
+  def move_to_root
+    @item = Item.find(params[:item_id])
+    if current_user.id == @item.user_id || @item.purchase.present?
+    end
+    redirect_to root_path
   end
 end
