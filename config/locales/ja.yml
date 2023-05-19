@@ -18,6 +18,9 @@ ja:
         prefecture_id: 発送元の地域
         send_day_id: 発送までの日数
         price: 販売価格
+  # purchase_addressの日本語化
+  activemodel:
+    attributes:
       purchase_address:
         post_code: 郵便番号
         locality: 市区町村
@@ -25,3 +28,4 @@ ja:
         phone: 電話番号
         token: トークン
         prefecture_id: 都道府県
+        building: 建物名
