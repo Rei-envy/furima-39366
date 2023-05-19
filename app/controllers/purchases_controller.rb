@@ -1,38 +1,41 @@
 class PurchasesController < ApplicationController
-    before_action :authenticate_user!
+  before_action :authenticate_user!
 
-    def index
-        @purchase_address = PurchaseAddress.new
-        @purchase = Purchase.new(purchase_params)
-    end
+  def index
+    @purchase_address = PurchaseAddress.new
+    @purchase = Purchase.new(purchase_params)
+  end
 
-    def create
-        @purchase = Purchase.new(purchase_params)
-        @purchase_address = PurchaseAddress.new(purchase_address_params)
-        if @purchase_address.valid?
-            pay_item
-            @purchase_address.save
-            redirect_to root_path
-        else
-            render :index
-        end
+  def create
+    @purchase = Purchase.new(purchase_params)
+    @purchase_address = PurchaseAddress.new(purchase_address_params)
+    if @purchase_address.valid?
+      pay_item
+      @purchase_address.save
+      redirect_to root_path
+    else
+      render :index
     end
+  end
 
-    private
-    def purchase_params
-        params.permit(:name, :image, :price, :load_id).merge(user_id: current_user.id, item_id: params[:item_id])
-    end
+  private
 
-    def purchase_address_params
-        params.require(:purchase_address).permit(:post_code, :prefecture_id, :locality, :house_number, :building, :phone).merge(user_id: current_user.id, item_id: params[:item_id],purchase_id: @purchase.id, token: params[:token])
-    end
+  def purchase_params
+    params.permit(:name, :image, :price, :load_id).merge(user_id: current_user.id, item_id: params[:item_id])
+  end
 
-    def pay_item
-        Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
-        Payjp::Charge.create(
-            amount: @purchase.item.price, # 商品の値段
-            card: purchase_address_params[:token],    # カードトークン
-            currency: 'jpy'                 # 通貨の種類（日本円）
-        )
-    end
+  def purchase_address_params
+    params.require(:purchase_address).permit(:post_code, :prefecture_id, :locality, :house_number, :building, :phone).merge(
+      user_id: current_user.id, item_id: params[:item_id], purchase_id: @purchase.id, token: params[:token]
+    )
+  end
+
+  def pay_item
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
+    Payjp::Charge.create(
+      amount: @purchase.item.price, # 商品の値段
+      card: purchase_address_params[:token], # カードトークン
+      currency: 'jpy' # 通貨の種類（日本円）
+    )
+  end
 end
