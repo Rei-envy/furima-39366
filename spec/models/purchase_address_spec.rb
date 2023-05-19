@@ -52,30 +52,35 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Phone can't be blank")
       end
-      it 'post_codeが「3桁ハイフン4桁」以外では登録できない' do
+      it 'post_codeが「3桁ハイフン4桁」以外では保存できない' do
         @purchase_address.post_code = '22-22222'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Post code is invalid")
       end
-      it 'post_codeが半角数字以外では登録できない' do
+      it 'post_codeが半角数字以外では保存できない' do
         @purchase_address.post_code = '０００ー００００'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Post code is invalid")
       end
-      it 'phoneが10桁未満では登録できない' do
+      it 'phoneが10桁未満では保存できない' do
         @purchase_address.phone = '0000000'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Phone is invalid")
       end
-      it 'phoneが12桁以上では登録できない' do
+      it 'phoneが12桁以上では保存できない' do
         @purchase_address.phone = '000000000000'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Phone is invalid")
       end
-      it 'phoneが半角数字以外では登録できない' do
+      it 'phoneが半角数字以外では保存できない' do
         @purchase_address.phone = '００００００００００'
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Phone is invalid")
+      end
+      it "tokenが空では保存できないこと" do
+        @purchase_address.token = ''
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Token can't be blank")
       end
      end
   end
