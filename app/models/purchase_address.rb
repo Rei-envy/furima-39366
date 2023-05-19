@@ -10,7 +10,6 @@ class PurchaseAddress
         validates :locality
         validates :house_number    
         validates :phone,           format: {with: /\A[0-9]{10,11}\z/}
-        validates :purchase_id
     end
     # ジャンルの選択が「---」の時は保存できないようにする
     validates :prefecture_id, numericality: { other_than: 1 }

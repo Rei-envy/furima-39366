@@ -27,11 +27,6 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Item can't be blank")
       end
-      it '購入情報がない場合は保存できない' do
-        @purchase_address.purchase_id = ''
-        @purchase_address.valid?
-        expect(@purchase_address.errors.full_messages).to include("Purchase can't be blank")
-      end
       it 'post_codeが空では保存できない' do
         @purchase_address.post_code = ''
         @purchase_address.valid?

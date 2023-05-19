@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :purchase_address do
     user_id           { 1 }
     item_id           { 1 }
-    purchase_id       { 1 }
     post_code         { '888-8888' }
     prefecture_id     { 2 }
     locality          { '東京都' }
