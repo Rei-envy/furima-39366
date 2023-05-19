@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :destroy]
+  before_action :authenticate_user!, only: [:new, :update, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update]
-  before_action :move_to_index, only: [:edit]
+  before_action :move_to_index, only: [:edit, :update]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -51,8 +51,9 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  # 自身が出品した売却済み商品の商品情報編集ページに遷移しようとすると、トップページに遷移する
   def move_to_index
-    return if current_user.id == @item.user_id
+    return unless current_user.id != @item.user_id || @item.purchase.present?
 
     redirect_to action: :index
   end
